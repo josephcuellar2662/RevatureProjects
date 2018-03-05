@@ -48,7 +48,7 @@ public class User extends Login implements Serializable {
 	@Override
 	public String toString() {
 		return "User [type=" + type + ", firstName=" + firstName
-				+ ", lastName=" + lastName + "]";
+				+ ", lastName=" + lastName + ", Username=" + this.getUsername() + "]";
 	}
 	
 	
