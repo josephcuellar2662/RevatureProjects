@@ -321,7 +321,6 @@ public class App
         	}
         	else if(state.equals("3")){ //Admin
         		System.out.println("Login as an Admin");
-        		System.out.println("Previous menu (-1)");
         		System.out.print("username: ");
         		username = in.next();
         		user = files.deserializeUser(username, "Users");
@@ -332,6 +331,7 @@ public class App
         			System.out.println("Delete account (2)");
         			System.out.println("Deposit to an account (3)");
         			System.out.println("Withdraw from an account (4)");
+        			System.out.println("Transfer (5)");
         			System.out.println("Previous menu (-1)");
         			String option = in.next();
         			if(option.equals("1")){
@@ -383,15 +383,65 @@ public class App
         					}
         				}
         			}
+        			else if(option.equals("5")){
+						System.out.print("Amount: ");
+						amount = in.nextDouble();
+						System.out.print("Username: ");
+						username = in.next();
+						
+						System.out.println("Transfer from checkings to savings (1)");
+						System.out.println("Transfer from savings to checkings (2)");
+						String userInput = in.next();
+						if(userInput.equals("1")){
+							if(files.accountExist(username, "checkings") && (files.accountExist(username, "savings"))){
+								account = files.deserializeAccount(username, "Accounts","checkings");
+								if(account.getBalance() > amount){
+									account.withdraw(amount);
+									files.serializeAccount(account, "Accounts");
+									System.out.println("Available balance in checkings account: " + account.getBalance());
+									account = files.deserializeAccount(username,"Accounts","savings");
+									account.deposit(amount);
+									files.serializeAccount(account, "Accounts");
+									System.out.println("Available balance in savings account: " + account.getBalance());
+									System.out.println();
+								} else {
+									System.out.println("Insufficent funds");
+									System.out.println();
+								}
+							} else {
+								System.out.println("Transaction not possible. You are missing a checkings or savings account or both");
+								System.out.println();
+							}
+						}
+						else if(userInput.equals("2")){
+							if(files.accountExist(username, "checkings") && (files.accountExist(username, "savings"))){
+								account = files.deserializeAccount(username,"Accounts", "savings");
+								if(account.getBalance() > amount){
+									account.withdraw(amount);
+									files.serializeAccount(account, "Accounts");
+									System.out.println("Available balance in savings account: " + account.getBalance());
+									account = files.deserializeAccount(username, "Accounts","checkings" );
+									account.deposit(amount);
+									files.serializeAccount(account, "Accounts");
+									System.out.println("Available balance in checkings account: " + account.getBalance());
+									System.out.println();
+								} else {
+									System.out.println("Insufficent funds");
+									System.out.println();
+								}
+							} else {
+								System.out.println("Transaction not possible. You are missing a checkings or savings account or both");
+								System.out.println();
+							}
+						}
+        			}
         			else if(option.equals("-1")){
         				state = "-2";
         			}
         		}
         	}
     	}
-
     }
-    
     public static boolean validInput(String input){
     	try{
     		Integer.parseInt(input);
@@ -401,5 +451,4 @@ public class App
     	}
     	return true;
     }
-
 }

@@ -162,6 +162,7 @@ public class TextFiles {
 
             		// Method for deserialization of object
             		acc = (Account)in.readObject();
+            		System.out.println(acc);
             		in.close();
             		f.close();
             	}
