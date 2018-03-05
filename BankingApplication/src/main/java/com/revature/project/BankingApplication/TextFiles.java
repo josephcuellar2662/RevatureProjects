@@ -92,7 +92,6 @@ public class TextFiles {
     	// Deserialization
     	Account acc = null;
     	String fileName = getFileName(username, accountType);
-    	System.out.println("fileName: " + fileName);
     	try
     	{   
     		// Reading the object from a file
