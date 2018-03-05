@@ -13,12 +13,14 @@ public class App
     	String firstName = "", lastName="";
     	String username="", password="";
     	String state = "-2";
-    	Account admin = new Account(new User("admin", "john", "doe", "theAdmin", "1234"), "admin");
+    	User adminUser = new User("admin", "john", "doe", "theAdmin", "1234");
+    	Account adminAccount = new Account(adminUser, "admin");
+    	files.serializeUser(adminUser, "Users");
     	Account addAccount = null;
     	Account account = null;
     	double amount = 0.0;
     	User user = null;
-    	files.serializeAccount(admin, "Accounts");
+    	files.serializeAccount(adminAccount, "Accounts");
     	files.deserializeAccount("theAdmin", "Accounts","admin");
     
     	//files.accountExist("");
@@ -74,7 +76,7 @@ public class App
             					System.out.println("View account information (5)");
             					System.out.println("Transfer (6)");
             					System.out.println("Add user to account (7)");
-            					System.out.println("Exit (-1)");
+            					System.out.println("Previous menu (-1)");
             					state = in.next();
 
             					if(state.equals("1")){
@@ -311,70 +313,79 @@ public class App
         	else if(state.equals("2")){ //Employee
         
         		files.printAllFiles();
-        		System.out.println("Exit(-1)");
+        		System.out.println("Previous menu (-1)");
         		String userInput = in.next();
         		if(userInput.equals("-1")){
         			state = "-2";
         		}	
         	}
         	else if(state.equals("3")){ //Admin
-        		System.out.println("View account info (1)");
-        		System.out.println("Delete account (2)");
-        		System.out.println("Deposit to an account (3)");
-        		System.out.println("Withdraw from an account (4)");
-        		System.out.println("Exit(-1)");
-        		String option = in.next();
-        		if(option.equals("1")){
-        			files.printAllFiles();
-        			System.out.println("Exit(-1)");
-        			option = in.next();
-        		}
-        		else if(option.equals("2")){
-        			System.out.print("Username: ");
-        			username = in.next();
-        			System.out.print("Account type (checkings, savings): ");
-        			String accType = in.next();
-        			files.deleteFile(username, accType);
-        			files.printAllFiles();
-        			System.out.println("Exit(-1)");
-        			option = in.next();
-        		}
-        		else if(option.equals("3")){
-        			System.out.print("Amount: ");
-        			amount = in.nextDouble();
-        			System.out.print("Username: ");
-        			username = in.next();
-        			System.out.println("Account type (checkings or savings)");
-        			String accType = in.next();
-        			if(files.accountExist(username, accType)){
-        				account = files.deserializeAccount(username, "Accounts", accType);
-        				account.deposit(amount);
-        				files.serializeAccount(account, "Accounts");
-        				System.out.println("Deposit successful");
-        				System.out.println();
+        		System.out.println("Login as an Admin");
+        		System.out.println("Previous menu (-1)");
+        		System.out.print("username: ");
+        		username = in.next();
+        		user = files.deserializeUser(username, "Users");
+        		System.out.print("password: ");
+        		password = in.next();
+        		if(user != null && user.getType().equals("admin") && user.getPassword().equals(password)){
+        			System.out.println("View account info (1)");
+        			System.out.println("Delete account (2)");
+        			System.out.println("Deposit to an account (3)");
+        			System.out.println("Withdraw from an account (4)");
+        			System.out.println("Previous menu (-1)");
+        			String option = in.next();
+        			if(option.equals("1")){
+        				files.printAllFiles();
+        				System.out.println("Previous menu (-1)");
+        				option = in.next();
         			}
-        		}
-        		else if(option.equals("4")){
-        			System.out.print("Amount: ");
-        			amount = in.nextDouble();
-        			System.out.print("Username: ");
-        			username = in.next();
-        			System.out.println("Account type (checkings or savings)");
-        			String accType = in.next();
-        			if(files.accountExist(username, accType)){
-        				account = files.deserializeAccount(username, "Accounts", accType);
-        				if(account.withdraw(amount)){
+        			else if(option.equals("2")){
+        				System.out.print("Username: ");
+        				username = in.next();
+        				System.out.print("Account type (checkings, savings): ");
+        				String accType = in.next();
+        				files.deleteFile(username, accType);
+        				files.printAllFiles();
+        				System.out.println("Previous menu (-1)");
+        				option = in.next();
+        			}
+        			else if(option.equals("3")){
+        				System.out.print("Amount: ");
+        				amount = in.nextDouble();
+        				System.out.print("Username: ");
+        				username = in.next();
+        				System.out.println("Account type (checkings or savings)");
+        				String accType = in.next();
+        				if(files.accountExist(username, accType)){
+        					account = files.deserializeAccount(username, "Accounts", accType);
+        					account.deposit(amount);
         					files.serializeAccount(account, "Accounts");
-        					System.out.println("Withdrawal successful");
-        					System.out.println();
-        				} else {
-        					System.out.println("Insufficient funds");
+        					System.out.println("Deposit successful");
         					System.out.println();
         				}
         			}
-        		}
-        		else if(option.equals("-1")){
-        			state = "-2";
+        			else if(option.equals("4")){
+        				System.out.print("Amount: ");
+        				amount = in.nextDouble();
+        				System.out.print("Username: ");
+        				username = in.next();
+        				System.out.println("Account type (checkings or savings)");
+        				String accType = in.next();
+        				if(files.accountExist(username, accType)){
+        					account = files.deserializeAccount(username, "Accounts", accType);
+        					if(account.withdraw(amount)){
+        						files.serializeAccount(account, "Accounts");
+        						System.out.println("Withdrawal successful");
+        						System.out.println();
+        					} else {
+        						System.out.println("Insufficient funds");
+        						System.out.println();
+        					}
+        				}
+        			}
+        			else if(option.equals("-1")){
+        				state = "-2";
+        			}
         		}
         	}
     	}
