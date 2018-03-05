@@ -3,6 +3,10 @@ package com.revature.project.BankingApplication;
 import java.io.Serializable;
 
 public class Login implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
 
@@ -32,6 +36,10 @@ public class Login implements Serializable{
 	public boolean login(String username, String password){
 		return (this.username.equals(username) && this.password.equals(password));
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Login [username=" + username + ", password=" + password + "]";
+	}
 		
 }
