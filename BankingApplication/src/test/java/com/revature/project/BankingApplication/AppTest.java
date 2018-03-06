@@ -98,5 +98,25 @@ public class AppTest
     	User user = new User("customer", "Joseph", "Cuellar", "jecuellar", "1234");
     	assertEquals("Cuellar", user.getLastName());
     }
-  
+    
+    //Test Login Class
+    public void testLoginGetUsername(){
+    	Login login = new Login("jecuellar", "1234");
+    	assertEquals("jecuellar", login.getUsername());
+    }
+    
+    public void testLoginGetPassword(){
+    	Login login = new Login("jecuellar", "1234");
+    	assertEquals("1234", login.getPassword());
+    }
+    
+    public void testLoginTrue(){
+    	Login login = new Login("jecuellar", "1234");
+    	assertEquals(true, login.login("jecuellar", "1234"));
+    }
+    
+    public void testLoginFalse(){
+    	Login login = new Login("jecuellar", "1234");
+    	assertEquals(false, login.login("jecuellar", "123"));
+    }
 }

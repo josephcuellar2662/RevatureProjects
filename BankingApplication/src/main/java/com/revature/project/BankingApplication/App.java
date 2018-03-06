@@ -42,7 +42,7 @@ public class App
         	if(state.equals("1")){ //Customer
         		System.out.print("Press 1 register or press 2 to login: ");
         		state = in.next();
-        		if(state.equalsIgnoreCase("1")){
+        		if(state.equals("1")){
         			//Register
         			System.out.print("First Name: ");
         			firstName = in.next();

@@ -119,7 +119,7 @@ public class TextFiles {
     }
     
     public boolean accountExist(String username, String accountType){
-    	File[] files = new File("/Users/josephcuellar/Desktop/RevatureProject/RevatureProjects/BankingApplication/Accounts").listFiles();
+    	File[] files = new File("/Users/josephcuellar/Desktop/Revature/Project/RevatureProjects/BankingApplication/Accounts").listFiles();
         for (File file : files) {
         	if(file.getName().contains(username) && file.getName().contains(accountType)){
         		return true;
@@ -129,7 +129,7 @@ public class TextFiles {
     }
     
     public String getFileName(String username, String accountType){
-    	File[] files = new File("/Users/josephcuellar/Desktop/RevatureProject/RevatureProjects/BankingApplication/Accounts").listFiles();
+    	File[] files = new File("/Users/josephcuellar/Desktop/Revature/Project/RevatureProjects/BankingApplication/Accounts").listFiles();
         for (File file : files) {
         	if(file.getName().contains(username) && file.getName().contains(accountType)){
         		return file.getName();
@@ -139,7 +139,7 @@ public class TextFiles {
     }
     
     public void deleteFile(String username, String accountType){
-    	File[] files = new File("/Users/josephcuellar/Desktop/RevatureProject/RevatureProjects/BankingApplication/Accounts").listFiles();
+    	File[] files = new File("/Users/josephcuellar/Desktop/Revature/Project/RevatureProjects/BankingApplication/Accounts").listFiles();
         for (File file : files) {
         	if(file.getName().contains(username) && file.getName().contains(accountType)){
         		file.delete();
@@ -148,7 +148,7 @@ public class TextFiles {
     }
     
     public void printAllFiles(){
-    	File[] files = new File("/Users/josephcuellar/Desktop/RevatureProject/RevatureProjects/BankingApplication/Accounts").listFiles();
+    	File[] files = new File("/Users/josephcuellar/Desktop/Revature/Project/RevatureProjects/BankingApplication/Accounts").listFiles();
         Account acc = null;
     	for (int i = 0; i<files.length; i++) {
         	if(!files[i].getName().contains("admin")){
